@@ -56,7 +56,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #d8a6b2;outline-offse
 .summary-title{margin:0 0 5px;font-size:1.35rem}.summary-sub{margin:0 0 16px;color:var(--muted);font-size:.86rem}
 .summary-preview{display:block;width:100%;height:auto;border-radius:18px;border:1px solid #eadfe2;box-shadow:var(--shadow);background:#fff}
 .summary-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.summary-actions .cta{margin:0}.footnote{margin:15px 2px 0;color:var(--muted);font-size:.73rem;line-height:1.6}
+.summary-actions .cta{margin:0}.save-hint{margin:10px 2px 0;padding:11px 13px;border-radius:12px;background:#f8f3f4;color:#6f4a55;font-size:.8rem;line-height:1.55}.save-hint strong{color:#8d102f}.footnote{margin:15px 2px 0;color:var(--muted);font-size:.73rem;line-height:1.6}
 .section-label{font-size:.73rem;color:var(--gold);letter-spacing:.13em;font-weight:700}
 @media(max-width:620px){body{padding:0 13px 32px}main{padding-top:15px}.hero{padding:26px 23px;border-radius:22px}.intro{align-items:flex-start}.c3{grid-template-columns:1fr}.c3 .choice{min-height:65px;text-align:left;padding:13px 16px}.c3 .choice strong{font-size:.95rem}.c3 .choice[aria-pressed=true]:after{right:13px;top:50%;transform:translateY(-50%)}.card{padding:7px 14px}.li{font-size:.82rem;gap:10px}.li b{white-space:normal}.summary-actions{grid-template-columns:1fr}.toggle .tag{display:none}}
 @media print{body{background:#fff;padding:0}.hero,.cta,.summary-actions{display:none!important}main{padding:0}.summary-preview{box-shadow:none}}
@@ -175,11 +175,31 @@ async function createSummaryImage(){
 }
 $("confirm").addEventListener("click",async()=>{
  const p=DATA[ded].plans[plan],on=$("inc").checked;
- $("summary").innerHTML=`<h2 class="summary-title">สรุปแบบประกันที่คุณเลือก</h2><p class="summary-sub">ภาพสรุปความคุ้มครอง พร้อมบันทึกเพื่อส่งต่อได้ทันที</p><div id="imageHolder"></div><div class="summary-actions"><button class="cta" id="download">↓ บันทึกภาพสรุป PNG</button><button class="cta alt" id="back">แก้ไขแบบที่เลือก</button></div><h2 style="font-size:1rem;margin:27px 0 8px">รายละเอียดความคุ้มครอง</h2><div class="card">${benefits(p,on)}<div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>${dedNote()}${incNote(on)}<p class="footnote">ภาพสรุปนี้จัดทำจากตัวเลือกที่เลือกในหน้าเว็บ ไม่ใช่เอกสารยืนยันการรับประกันหรือกรมธรรม์ โปรดตรวจสอบรายละเอียดกับบริษัท/ตัวแทนก่อนนำเสนอหรือทำสัญญา</p>`;
+ $("summary").innerHTML=`<h2 class="summary-title">สรุปแบบประกันที่คุณเลือก</h2><p class="summary-sub">ภาพสรุปความคุ้มครอง พร้อมบันทึกเพื่อส่งต่อได้ทันที</p><div id="imageHolder"></div><div class="summary-actions"><button class="cta" id="download">↓ บันทึก / แชร์ภาพสรุป</button><button class="cta alt" id="back">แก้ไขแบบที่เลือก</button></div><p class="save-hint" id="saveHint">📱 <strong>มือถือ:</strong> กด “บันทึก / แชร์ภาพสรุป” แล้วเลือก “บันทึกรูปภาพ” หรือ “Save Image” เพื่อเก็บไว้ในแกลเลอรี<br>💻 <strong>คอมพิวเตอร์:</strong> ภาพจะถูกดาวน์โหลดไปยังโฟลเดอร์ Downloads</p><h2 style="font-size:1rem;margin:27px 0 8px">รายละเอียดความคุ้มครอง</h2><div class="card">${benefits(p,on)}<div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>${dedNote()}${incNote(on)}<p class="footnote">ภาพสรุปนี้จัดทำจากตัวเลือกที่เลือกในหน้าเว็บ ไม่ใช่เอกสารยืนยันการรับประกันหรือกรมธรรม์ โปรดตรวจสอบรายละเอียดกับบริษัท/ตัวแทนก่อนนำเสนอหรือทำสัญญา</p>`;
  $("pick").classList.add("hide");$("summary").classList.remove("hide");window.scrollTo(0,0);
  const canvas=await createSummaryImage(),holder=$("imageHolder"),img=document.createElement("img");
  img.className="summary-preview";img.alt="ภาพสรุปแบบประกัน AIA HEALTH HAPPY KIDS";img.src=canvas.toDataURL("image/png");holder.appendChild(img);
- $("download").onclick=()=>{const a=document.createElement("a");a.download="AIA-Health-Happy-Kids-Summary.png";a.href=canvas.toDataURL("image/png");a.click()};
+ $("download").onclick=async()=>{
+   const button=$("download"),hint=$("saveHint");
+   button.disabled=true;button.textContent="กำลังเตรียมภาพ…";
+   try{
+     const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("สร้างไฟล์ภาพไม่สำเร็จ")),"image/png"));
+     const file=new File([blob],"AIA-Health-Happy-Kids-Summary.png",{type:"image/png"});
+     if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+       await navigator.share({files:[file],title:"AIA HEALTH HAPPY KIDS – สรุปแบบประกัน",text:"ภาพสรุปแบบประกันที่เลือก"});
+       hint.innerHTML="<strong>เปิดเมนูแชร์แล้ว</strong> เลือก “บันทึกรูปภาพ / Save Image” หรือเลือกแอปที่ต้องการส่งภาพได้เลย";
+     }else{
+       const url=URL.createObjectURL(blob),a=document.createElement("a");
+       a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();
+       setTimeout(()=>URL.revokeObjectURL(url),60000);
+       hint.innerHTML="<strong>ดาวน์โหลดภาพแล้ว</strong> หากใช้ Android ให้เปิดแอป Files > Downloads; หากใช้ iPhone ให้เปิด Files > Downloads หรือแตะภาพด้านบนค้างไว้แล้วเลือก “บันทึกไปยังรูปภาพ”";
+     }
+   }catch(err){
+     if(err.name!=="AbortError"){
+       hint.innerHTML="<strong>ยังบันทึกภาพไม่ได้?</strong> แตะภาพสรุปด้านบนค้างไว้ แล้วเลือก “บันทึกรูปภาพ / Save Image” หรือ “ดาวน์โหลดภาพ”";
+     }
+   }finally{button.disabled=false;button.textContent="↓ บันทึก / แชร์ภาพสรุป";}
+ };
  $("back").onclick=()=>{$("summary").classList.add("hide");$("pick").classList.remove("hide");window.scrollTo(0,0)};
 });
 renderPicks();renderDetail();
