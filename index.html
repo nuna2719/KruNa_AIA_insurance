@@ -6,187 +6,183 @@
 <title>AIA HEALTH HAPPY KIDS</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#f3f1f4; --card:#fff; --text:#1d1a22; --muted:#6a6573; --line:#ddd8e2;
-  --accent:#c4122f; --accent-ink:#fff; --sel:#fdecef;
-  --warn-bg:#fff4d6; --warn-line:#e0a800; --inc-bg:#e2f4ea; --inc-line:#1a7f4b;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#16131a; --card:#221e28; --text:#f1edf5; --muted:#a39db0; --line:#3a3443;
-    --accent:#ff5a73; --accent-ink:#2a0710; --sel:#3a1f27;
-    --warn-bg:#3b3010; --warn-line:#e0b52e; --inc-bg:#12301f; --inc-line:#5fd08f;
-  }
-}
+:root{--ink:#29212a;--muted:#766b75;--wine:#a20f32;--wine2:#c5284c;--gold:#c9a66b;--cream:#fbf8f5;--paper:#fff;--line:#eadfe2;--green:#247b59;--shadow:0 18px 55px rgba(62,25,39,.09)}
 *{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--text);
-  font-family:'Noto Sans Thai',system-ui,-apple-system,'Sarabun',sans-serif;line-height:1.6;
-  padding:env(safe-area-inset-top,0px) 16px calc(24px + env(safe-area-inset-bottom,0px))}
-main{max-width:520px;margin:0 auto;padding-top:22px}
-h1{font-size:1.35rem;margin:0 0 18px;color:var(--accent)}
-h2{font-size:1rem;margin:22px 0 10px}
-.row{display:grid;gap:10px}
-.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:1fr 1fr 1fr}
-.choice{padding:14px 8px;text-align:center;font:inherit;font-weight:700;color:var(--text);
-  background:var(--card);border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
-.choice small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
-.choice[aria-pressed=true]{background:var(--sel);border-color:var(--accent);color:var(--accent)}
-.toggle{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);
-  border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
-.toggle:has(input:checked){background:var(--inc-bg);border-color:var(--inc-line)}
-.toggle input{width:22px;height:22px;accent-color:var(--inc-line);flex:none}
-.toggle span{flex:1}.toggle small{display:block;color:var(--muted)}
-button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 16px;margin-top:16px}
-.li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.93rem}
-.li:last-child{border-bottom:0}
-.li b{text-align:right;white-space:nowrap;flex:none}
-.li span{color:var(--muted)}
-.price{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0}
-.price b{font-size:1.6rem;color:var(--accent)}
-.note{margin-top:14px;padding:12px 14px;background:var(--warn-bg);border-left:5px solid var(--warn-line);border-radius:8px;font-size:.92rem}
-.note.inc{background:var(--inc-bg);border-left-color:var(--inc-line)}
-.note.off{background:var(--card);border-left-color:var(--line);color:var(--muted)}
-.note strong{display:block;font-size:1.05rem;margin-bottom:2px}
-.cta{width:100%;margin-top:18px;padding:15px;font:inherit;font-weight:700;font-size:1rem;
-  background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;cursor:pointer}
-.cta:disabled{opacity:.45;cursor:not-allowed}
-.cta.alt{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
-.empty{margin-top:16px;padding:16px;text-align:center;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:12px}
-.hide{display:none}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;padding:0 18px 48px;background:linear-gradient(135deg,#f7f1ef 0%,#f8f6f3 48%,#f0e8e7 100%);color:var(--ink);font-family:'Noto Sans Thai',system-ui,sans-serif;line-height:1.65}
+main{max-width:900px;margin:0 auto;padding:34px 0 50px}
+.hero{position:relative;overflow:hidden;border-radius:28px;padding:34px 38px 32px;background:linear-gradient(115deg,#650d29 0%,#941331 54%,#bd3651 100%);color:#fff;box-shadow:0 22px 60px rgba(104,16,44,.2)}
+.hero:before,.hero:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.13);border-radius:50%;pointer-events:none}
+.hero:before{width:340px;height:340px;right:-95px;top:-190px}.hero:after{width:250px;height:250px;right:40px;bottom:-205px}
+.hero-top{display:flex;align-items:center;gap:10px;color:#f4d9df;font-size:.78rem;letter-spacing:.16em;font-weight:700}
+.brand-mark{width:34px;height:34px;border:1px solid rgba(255,255,255,.5);border-radius:11px;display:grid;place-items:center;font-weight:700;font-size:1.05rem}
+h1{font-size:clamp(1.55rem,4vw,2.25rem);line-height:1.3;margin:20px 0 8px;letter-spacing:-.03em}
+.hero p{margin:0;color:#f5dfe4;max-width:560px;font-size:.96rem}
+.hero-bottom{display:flex;align-items:center;gap:9px;margin-top:25px;color:#f7e7e9;font-size:.78rem}
+.hero-bottom span{height:1px;width:36px;background:var(--gold)}
+.intro{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:26px 2px 20px}
+.intro h2{font-size:1.18rem;margin:0}.intro p{font-size:.82rem;color:var(--muted);margin:3px 0 0}
+.step{display:flex;align-items:center;gap:12px;margin:26px 0 13px}
+.step-no{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:50%;background:#f3e4e7;color:var(--wine);font-weight:700;font-size:.85rem}
+.step h2{font-size:1rem;margin:0}.step small{display:block;color:var(--muted);font-size:.78rem;font-weight:400}
+.row{display:grid;gap:12px}.c2{grid-template-columns:repeat(2,minmax(0,1fr))}.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.choice{position:relative;min-height:94px;padding:16px 12px;text-align:left;font:inherit;color:var(--ink);background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:17px;cursor:pointer;transition:.2s ease;box-shadow:0 3px 12px rgba(61,27,38,.025)}
+.choice:hover{transform:translateY(-2px);border-color:#c88b9a;box-shadow:0 9px 22px rgba(90,28,48,.08)}
+.choice[aria-pressed=true]{background:linear-gradient(145deg,#fff8f8,#f9e9ed);border:1.7px solid var(--wine);box-shadow:0 8px 22px rgba(162,15,50,.1)}
+.choice[aria-pressed=true]:after{content:"✓";position:absolute;right:12px;top:10px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:var(--wine);color:white;font-size:.75rem}
+.choice strong{display:block;font-size:.95rem;color:var(--wine);padding-right:20px}
+.choice small{display:block;margin-top:5px;color:var(--muted);font-size:.76rem;font-weight:400;line-height:1.45}
+.c3 .choice{text-align:center;min-height:78px}.c3 .choice strong{padding:0;font-size:1rem}.c3 .choice[aria-pressed=true]:after{right:7px;top:7px;width:18px;height:18px;font-size:.65rem}
+.toggle{display:flex;align-items:center;gap:14px;padding:17px 18px;background:#fff;border:1px solid var(--line);border-radius:17px;cursor:pointer;box-shadow:0 4px 16px rgba(61,27,38,.035)}
+.toggle:has(input:checked){background:#f0f8f3;border-color:#78aa91}
+.toggle input{width:21px;height:21px;accent-color:var(--green);flex:none}
+.toggle span{flex:1;font-weight:700}.toggle small{display:block;color:var(--muted);font-weight:400;font-size:.78rem}
+.toggle .tag{font-size:.72rem;color:var(--green);background:#e1f1e8;border-radius:20px;padding:4px 9px;white-space:nowrap}
+button:focus-visible,input:focus-visible{outline:3px solid #d8a6b2;outline-offset:3px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:19px;padding:8px 20px;margin-top:17px;box-shadow:0 8px 26px rgba(61,27,38,.045)}
+.detail-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0 5px;color:var(--wine);font-weight:700;font-size:.92rem}
+.li{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #f0e9eb;font-size:.88rem}
+.li:last-child{border-bottom:0}.li span{color:var(--muted)}.li b{text-align:right;white-space:nowrap;flex:none}
+.price{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 0 13px;border-top:1px solid var(--line);margin-top:5px}
+.price span{font-weight:600}.price b{font-size:1.55rem;color:var(--wine)}
+.note{margin-top:13px;padding:14px 17px;background:#fff7e9;border:1px solid #f0dfb9;border-radius:14px;font-size:.86rem;color:#69512a}
+.note.inc{background:#eff8f2;border-color:#c9e5d3;color:#285b42}.note.off{background:#f8f5f5;border-color:#ebe3e5;color:var(--muted)}
+.note strong{display:block;font-size:.94rem;margin-bottom:2px;color:inherit}
+.cta{width:100%;margin-top:22px;padding:16px 20px;font:inherit;font-weight:700;font-size:1rem;background:linear-gradient(105deg,#8d102f,#b82045);color:#fff;border:0;border-radius:15px;cursor:pointer;box-shadow:0 10px 24px rgba(162,15,50,.2);transition:.2s}
+.cta:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 14px 28px rgba(162,15,50,.25)}
+.cta:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}.cta.alt{background:#fff;color:var(--wine);border:1px solid #d7aab5;box-shadow:none}
+.empty{margin-top:16px;padding:22px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #d9c6cc;border-radius:15px;font-size:.88rem}
+.hide{display:none!important}
+.summary-title{margin:0 0 5px;font-size:1.35rem}.summary-sub{margin:0 0 16px;color:var(--muted);font-size:.86rem}
+.summary-preview{display:block;width:100%;height:auto;border-radius:18px;border:1px solid #eadfe2;box-shadow:var(--shadow);background:#fff}
+.summary-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.summary-actions .cta{margin:0}.footnote{margin:15px 2px 0;color:var(--muted);font-size:.73rem;line-height:1.6}
+.section-label{font-size:.73rem;color:var(--gold);letter-spacing:.13em;font-weight:700}
+@media(max-width:620px){body{padding:0 13px 32px}main{padding-top:15px}.hero{padding:26px 23px;border-radius:22px}.intro{align-items:flex-start}.c3{grid-template-columns:1fr}.c3 .choice{min-height:65px;text-align:left;padding:13px 16px}.c3 .choice strong{font-size:.95rem}.c3 .choice[aria-pressed=true]:after{right:13px;top:50%;transform:translateY(-50%)}.card{padding:7px 14px}.li{font-size:.82rem;gap:10px}.li b{white-space:normal}.summary-actions{grid-template-columns:1fr}.toggle .tag{display:none}}
+@media print{body{background:#fff;padding:0}.hero,.cta,.summary-actions{display:none!important}main{padding:0}.summary-preview{box-shadow:none}}
 </style>
 </head>
 <body>
 <main>
-<h1>แบบประกัน AIA HEALTH HAPPY KIDS</h1>
-
+<header class="hero">
+  <div class="hero-top"><span class="brand-mark">A</span><span>AIA · HEALTH PROTECTION</span></div>
+  <h1>AIA HEALTH HAPPY KIDS</h1>
+  <p>วางแผนความคุ้มครองสุขภาพสำหรับเด็ก เลือกแผนที่เหมาะสม พร้อมดูรายละเอียดและเบี้ยประกันได้ในที่เดียว</p>
+  <div class="hero-bottom"><span></span> HEALTHY FUTURE · PEACE OF MIND</div>
+</header>
 <section id="pick">
-  <h2>1. เลือกส่วนร่วมจ่ายต่อปี (Deductible)</h2>
+  <div class="intro"><div><h2>ออกแบบความคุ้มครอง</h2><p>เลือกตัวเลือกด้านล่างเพื่อดูแผนประกันที่เหมาะสม</p></div></div>
+  <div class="step"><span class="step-no">01</span><h2>เลือกค่ารับผิดส่วนแรก <small>Deductible · ต่อปีกรมธรรม์</small></h2></div>
   <div class="row c2" id="dedBtns"></div>
-
-  <h2>2. เลือกแผนการรักษา (วงเงินต่อปี)</h2>
+  <div class="step"><span class="step-no">02</span><h2>เลือกแผนการรักษา <small>วงเงินความคุ้มครองต่อปี</small></h2></div>
   <div class="row c3" id="planBtns"></div>
-
-  <h2>3. เลือกความคุ้มครองเพิ่มเติม</h2>
+  <div class="step"><span class="step-no">03</span><h2>เลือกความคุ้มครองเพิ่มเติม <small>สิทธิประโยชน์เสริมตามความต้องการ</small></h2></div>
   <label class="toggle"><input type="checkbox" id="inc">
-    <span>ชดเชยรายได้ 2,000 บาท/วัน<small>โอนเข้าบัญชีหลังออกจากโรงพยาบาล</small></span></label>
-
+    <span>ชดเชยรายได้ 2,000 บาท/วัน<small>โอนเข้าบัญชีหลังออกจากโรงพยาบาล</small></span><span class="tag">OPTIONAL</span></label>
   <div id="detail"></div>
-  <button class="cta" id="confirm" disabled>ยืนยันแบบประกันที่เลือก</button>
+  <button class="cta" id="confirm" disabled>ยืนยันแบบประกันที่เลือก　→</button>
+  <p class="footnote">ข้อมูลเบี้ยประกันและผลประโยชน์เป็นไปตามรายละเอียดที่ระบุในชุดข้อมูลนี้ โปรดตรวจสอบเงื่อนไขกรมธรรม์ก่อนตัดสินใจ</p>
 </section>
-
 <section id="summary" class="hide"></section>
 </main>
 
 <script>
 /* ===== ข้อมูลแผน แก้ไขได้ที่นี่ ===== */
-const COMMON = {
-  sum: 200000,
-  icu: "เหมาจ่ายตามจริง (ไม่เกิน 365 วัน)",
-  takehome: "20,000 บาท/ครั้ง",
-  surgery: "เหมาจ่าย",
-  followup: "เหมาจ่าย 2 ครั้งต่อการนอน"
-};
+const COMMON = {sum:200000,icu:"เหมาจ่ายตามจริง (ไม่เกิน 365 วัน)",takehome:"20,000 บาท/ครั้ง",surgery:"เหมาจ่าย",followup:"เหมาจ่าย 2 ครั้งต่อการนอน"};
 const INCOME_PER_DAY = 2000;
 const DATA = {
-  "10K": { label:"10K DEDUCTIBLE", first:10000, plans:{
-    "1,000,000": { room:"1,500 บาท", doctor:"20,000 บาท/การรักษาครั้งหนึ่ง", visit:"1,000 บาท/วัน", p:27090, pInc:28890 },
-    "5,000,000": { room:"3,000 บาท", doctor:"25,000 บาท/การรักษาครั้งหนึ่ง", visit:"2,000 บาท/วัน", p:36990, pInc:38790 },
-    "15,000,000":{ room:"6,000 บาท", doctor:"30,000 บาท/การรักษาครั้งหนึ่ง", visit:"4,000 บาท/วัน", p:50190, pInc:51990 }
-  }},
-  "30K": { label:"30K DEDUCTIBLE", first:30000, plans:{
-    "1,000,000": { room:"1,500 บาท", doctor:"20,000 บาท/การรักษาครั้งหนึ่ง", visit:"1,000 บาท/วัน", p:13490, pInc:15290 },
-    "5,000,000": { room:"3,000 บาท", doctor:"25,000 บาท/การรักษาครั้งหนึ่ง", visit:"2,000 บาท/วัน", p:19990, pInc:21790 },
-    "15,000,000":{ room:"6,000 บาท", doctor:"30,000 บาท/การรักษาครั้งหนึ่ง", visit:"4,000 บาท/วัน", p:32190, pInc:33990 }
-  }}
+ "10K":{label:"10K DEDUCTIBLE",first:10000,plans:{
+  "1,000,000":{room:"1,500 บาท",doctor:"20,000 บาท/การรักษาครั้งหนึ่ง",visit:"1,000 บาท/วัน",p:27090,pInc:28890},
+  "5,000,000":{room:"3,000 บาท",doctor:"25,000 บาท/การรักษาครั้งหนึ่ง",visit:"2,000 บาท/วัน",p:36990,pInc:38790},
+  "15,000,000":{room:"6,000 บาท",doctor:"30,000 บาท/การรักษาครั้งหนึ่ง",visit:"4,000 บาท/วัน",p:50190,pInc:51990}
+ }},
+ "30K":{label:"30K DEDUCTIBLE",first:30000,plans:{
+  "1,000,000":{room:"1,500 บาท",doctor:"20,000 บาท/การรักษาครั้งหนึ่ง",visit:"1,000 บาท/วัน",p:13490,pInc:15290},
+  "5,000,000":{room:"3,000 บาท",doctor:"25,000 บาท/การรักษาครั้งหนึ่ง",visit:"2,000 บาท/วัน",p:19990,pInc:21790},
+  "15,000,000":{room:"6,000 บาท",doctor:"30,000 บาท/การรักษาครั้งหนึ่ง",visit:"4,000 บาท/วัน",p:32190,pInc:33990}
+ }}
 };
 /* =================================== */
-
-const $ = id => document.getElementById(id);
-const fmt = n => n.toLocaleString("th-TH");
-let ded = "10K", plan = null;
-
-function btn(parent, text, sub, on, handler){
-  const b = document.createElement("button");
-  b.type="button"; b.className="choice"; b.setAttribute("aria-pressed", on);
-  b.innerHTML = text + (sub ? `<small>${sub}</small>` : "");
-  b.onclick = handler; parent.appendChild(b);
+const $=id=>document.getElementById(id),fmt=n=>n.toLocaleString("th-TH");
+let ded="10K",plan=null;
+function btn(parent,text,sub,on,handler){
+ const b=document.createElement("button");b.type="button";b.className="choice";b.setAttribute("aria-pressed",on);
+ b.innerHTML=`<strong>${text}</strong>`+(sub?`<small>${sub}</small>`:"");b.onclick=handler;parent.appendChild(b);
 }
-
 function renderPicks(){
-  $("dedBtns").innerHTML = ""; $("planBtns").innerHTML = "";
-  Object.keys(DATA).forEach(k=>{
-    btn($("dedBtns"), DATA[k].label, "รับผิดชอบเอง "+fmt(DATA[k].first)+" บาท/ปี", k===ded,
-        ()=>{ded=k; plan=null; renderPicks(); renderDetail();});
-  });
-  const plans = DATA[ded].plans;
-  if(plans){
-    Object.keys(plans).forEach(k=>{
-      btn($("planBtns"), k, "", k===plan, ()=>{plan=k; renderPicks(); renderDetail();});
-    });
-  }
+ $("dedBtns").innerHTML="";$("planBtns").innerHTML="";
+ Object.keys(DATA).forEach(k=>btn($("dedBtns"),DATA[k].label,"รับผิดชอบเอง "+fmt(DATA[k].first)+" บาท/ปี",k===ded,()=>{ded=k;plan=null;renderPicks();renderDetail()}));
+ Object.keys(DATA[ded].plans).forEach(k=>btn($("planBtns"),k+" บาท/ปี","วงเงินแผนการรักษา",k===plan,()=>{plan=k;renderPicks();renderDetail()}));
 }
-
-function incNote(on){
-  return on
-   ? `<div class="note inc"><strong>ชดเชยรายได้ ${fmt(INCOME_PER_DAY)} บาท/วัน</strong>โอนเข้าบัญชีหลังออกจากโรงพยาบาล</div>`
-   : `<div class="note off"><strong>ไม่ได้เลือกชดเชยรายได้</strong>ไม่มีเงินชดเชยรายได้ระหว่างนอนโรงพยาบาล</div>`;
+function incNote(on){return on?`<div class="note inc"><strong>ชดเชยรายได้ ${fmt(INCOME_PER_DAY)} บาท/วัน</strong>โอนเข้าบัญชีหลังออกจากโรงพยาบาล</div>`:`<div class="note off"><strong>ไม่ได้เลือกชดเชยรายได้</strong>ไม่มีเงินชดเชยรายได้ระหว่างนอนโรงพยาบาล</div>`}
+function dedNote(){return `<div class="note"><strong>ค่ารับผิดส่วนแรก ${fmt(DATA[ded].first)} บาท/ปีกรมธรรม์</strong>ผู้เอาประกันรับผิดชอบค่าใช้จ่ายส่วนแรกตามเงื่อนไขกรมธรรม์</div>`}
+function benefits(p,withInc){
+ const rows=[["ทุนประกัน",fmt(COMMON.sum)+" บาท"],["ค่าห้อง ค่าอาหาร ค่าบริการ รพ. (IPD)",p.room],["ค่าห้อง ICU",COMMON.icu],["ค่าแพทย์ ค่ายา ค่าสารอาหารทางหลอดเลือดและเวชภัณฑ์",p.doctor],["ค่ายากลับบ้าน",COMMON.takehome],["ค่าเยี่ยมแพทย์",p.visit],["ค่าผ่าตัด ล้างไต ค่ารถพยาบาลฉุกเฉิน",COMMON.surgery],["ค่าติดตามการรักษา",COMMON.followup]];
+ if(withInc)rows.push(["ชดเชยรายได้ต่อวัน",fmt(INCOME_PER_DAY)+" บาท (โอนเข้าบัญชีหลังออก รพ.)"]);
+ return rows.map(r=>`<div class="li"><span>${r[0]}</span><b style="white-space:normal">${r[1]}</b></div>`).join("");
 }
-function dedNote(){
-  return `<div class="note"><strong>รับผิดชอบค่าใช้จ่ายส่วนแรก ${fmt(DATA[ded].first)} บาท/ปีกรมธรรม์</strong>
-    เมื่อครบแล้ว ส่วนต่างที่เหลือบริษัทรับผิดชอบตามเงื่อนไขกรมธรรม์</div>`;
-}
-function benefits(p, withInc){
-  const rows = [
-    ["ทุน", fmt(COMMON.sum)+" บาท"],
-    ["ค่าห้อง ค่าอาหาร ค่าบริการ รพ. (IPD)", p.room],
-    ["ค่าห้อง ICU", COMMON.icu],
-    ["ค่าแพทย์ ค่ายา ค่าสารอาหารทางหลอดเลือดและเวชภัณฑ์", p.doctor],
-    ["ค่ายากลับบ้าน", COMMON.takehome],
-    ["ค่าเยี่ยมแพทย์", p.visit],
-    ["ค่าผ่าตัด ล้างไต ค่ารถพยาบาลฉุกเฉิน", COMMON.surgery],
-    ["ค่าติดตามการรักษา", COMMON.followup]
-  ];
-  if(withInc) rows.push(["ชดเชยรายได้ต่อวัน", fmt(INCOME_PER_DAY)+" บาท (โอนเข้าบัญชีหลังออก รพ.)"]);
-  return rows.map(r=>`<div class="li"><span>${r[0]}</span><b style="white-space:normal">${r[1]}</b></div>`).join("");
-}
-
 function renderDetail(){
-  const d = $("detail"), c = $("confirm");
-  const plans = DATA[ded].plans;
-  if(!plans){
-    d.innerHTML = `<div class="empty">แบบ ${DATA[ded].label} กำลังจัดทำข้อมูล กรุณาเลือกแบบอื่นก่อน</div>`;
-    c.disabled = true; return;
-  }
-  if(!plan){ d.innerHTML = `<div class="empty">เลือกแผนการรักษาเพื่อดูรายละเอียดความคุ้มครอง</div>`; c.disabled = true; return; }
-  const p = plans[plan], on = $("inc").checked;
-  d.innerHTML = `<div class="card">${benefits(p,on)}
-    <div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>
-    ${dedNote()}${incNote(on)}`;
-  c.disabled = false;
+ const d=$("detail"),c=$("confirm"),plans=DATA[ded].plans;
+ if(!plan){d.innerHTML=`<div class="empty">กรุณาเลือกแผนการรักษา เพื่อดูรายละเอียดความคุ้มครองและเบี้ยประกัน</div>`;c.disabled=true;return}
+ const p=plans[plan],on=$("inc").checked;
+ d.innerHTML=`<div class="card"><div class="detail-head"><span>รายละเอียดความคุ้มครอง</span><span class="section-label">PLAN DETAILS</span></div>${benefits(p,on)}<div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>${dedNote()}${incNote(on)}`;
+ c.disabled=false;
 }
-$("inc").addEventListener("change", renderDetail);
+$("inc").addEventListener("change",renderDetail);
 
-$("confirm").addEventListener("click", ()=>{
-  const p = DATA[ded].plans[plan], on = $("inc").checked;
-  $("summary").innerHTML = `
-    <h2 style="margin-top:0">สรุปแบบประกันที่คุณเลือก</h2>
-    <div class="card">
-      <div class="li"><span>แบบประกัน</span><b>${DATA[ded].label}</b></div>
-      <div class="li"><span>แผนการรักษา</span><b>${plan}</b></div>
-    </div>
-    ${dedNote()}${incNote(on)}
-    <h2>รายละเอียดความคุ้มครอง</h2>
-    <div class="card">${benefits(p,on)}
-      <div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>
-    <button class="cta alt" id="back">แก้ไขแบบที่เลือก</button>`;
-  $("pick").classList.add("hide"); $("summary").classList.remove("hide");
-  window.scrollTo(0,0);
-  $("back").onclick = ()=>{ $("summary").classList.add("hide"); $("pick").classList.remove("hide"); window.scrollTo(0,0); };
+/* สร้างภาพสรุป PNG จากข้อมูลแผนที่ผู้ใช้ยืนยัน */
+async function createSummaryImage(){
+ await document.fonts.ready;
+ const canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");
+ canvas.width=1200;canvas.height=1500;
+ const W=canvas.width,H=canvas.height;
+ const p=DATA[ded].plans[plan],on=$("inc").checked;
+ const premium=on?p.pInc:p.p;
+ const round=(x,y,w,h,r)=>{ctx.beginPath();ctx.roundRect(x,y,w,h,r)};
+ const gradient=ctx.createLinearGradient(0,0,W,620);gradient.addColorStop(0,"#650d29");gradient.addColorStop(.58,"#941331");gradient.addColorStop(1,"#bd3651");
+ ctx.fillStyle="#fbf8f5";ctx.fillRect(0,0,W,H);
+ ctx.fillStyle=gradient;round(0,0,W,570,0);ctx.fill();
+ // subtle decorative rings
+ ctx.strokeStyle="rgba(255,255,255,.10)";ctx.lineWidth=3;
+ [170,250,330].forEach((r)=>{ctx.beginPath();ctx.arc(1070,90,r,0,Math.PI*2);ctx.stroke()});
+ // header
+ ctx.fillStyle="#fff";round(78,70,62,62,18);ctx.fill();ctx.fillStyle="#8f1534";ctx.font="700 38px 'Noto Sans Thai'";ctx.textAlign="center";ctx.fillText("A",109,115);
+ ctx.textAlign="left";ctx.fillStyle="#f4d9df";ctx.font="700 23px 'Noto Sans Thai'";ctx.fillText("AIA  ·  HEALTH PROTECTION",165,110);
+ ctx.fillStyle="#fff";ctx.font="700 52px 'Noto Sans Thai'";ctx.fillText("HEALTH HAPPY KIDS",78,225);
+ ctx.fillStyle="#f6dfe4";ctx.font="400 26px 'Noto Sans Thai'";ctx.fillText("สรุปแบบประกันสุขภาพที่เลือก",80,278);
+ // selected plan pill
+ ctx.fillStyle="rgba(255,255,255,.14)";round(78,330,1044,116,22);ctx.fill();
+ ctx.fillStyle="#f1d7dd";ctx.font="500 22px 'Noto Sans Thai'";ctx.fillText("แผนการรักษา",110,375);
+ ctx.fillStyle="#fff";ctx.font="700 43px 'Noto Sans Thai'";ctx.fillText(plan+" บาท / ปี",110,425);
+ ctx.textAlign="right";ctx.fillStyle="#f1d7dd";ctx.font="700 21px 'Noto Sans Thai'";ctx.fillText(DATA[ded].label,1085,393);ctx.textAlign="left";
+ // cards
+ const card=(x,y,w,h)=>{ctx.shadowColor="rgba(55,20,35,.08)";ctx.shadowBlur=22;ctx.shadowOffsetY=8;ctx.fillStyle="#fff";round(x,y,w,h,24);ctx.fill();ctx.shadowColor="transparent";ctx.shadowBlur=0;ctx.shadowOffsetY=0};
+ const metric=(x,y,w,h,label,value,sub,accent="#9b1738")=>{card(x,y,w,h);ctx.fillStyle="#776b74";ctx.font="500 23px 'Noto Sans Thai'";ctx.fillText(label,x+30,y+52);ctx.fillStyle=accent;ctx.font="700 47px 'Noto Sans Thai'";ctx.fillText(value,x+30,y+119);ctx.fillStyle="#8a7d85";ctx.font="400 19px 'Noto Sans Thai'";ctx.fillText(sub,x+30,y+h-27)};
+ metric(78,510,500,210,"ทุนประกัน",fmt(COMMON.sum),"บาท");
+ metric(622,510,500,210,"ค่ารับผิดส่วนแรก",fmt(DATA[ded].first),"บาท / ปีกรมธรรม์","#8b642c");
+ metric(78,750,500,210,"ค่าชดเชยรายได้",on?fmt(INCOME_PER_DAY):"ไม่ได้เลือก",on?"บาท / วัน":"ไม่มีความคุ้มครองส่วนนี้",on?"#247b59":"#8a7d85");
+ metric(622,750,500,210,"วงเงินแผนการรักษา",plan,"บาท / ปี");
+ // premium strip
+ card(78,1000,1044,170);
+ ctx.fillStyle="#776b74";ctx.font="500 24px 'Noto Sans Thai'";ctx.fillText("เบี้ยประกันต่อปี",112,1060);
+ ctx.fillStyle="#9b1738";ctx.font="700 58px 'Noto Sans Thai'";ctx.fillText(fmt(premium)+" บาท",112,1135);
+ ctx.textAlign="right";ctx.fillStyle="#776b74";ctx.font="400 19px 'Noto Sans Thai'";ctx.fillText(on?"รวมความคุ้มครองชดเชยรายได้แล้ว":"ไม่รวมความคุ้มครองชดเชยรายได้",1080,1120);ctx.textAlign="left";
+ ctx.fillStyle="#a28b91";ctx.font="400 18px 'Noto Sans Thai'";ctx.fillText("ข้อมูลสรุปตามตัวเลือกที่ระบุ โปรดตรวจสอบเงื่อนไขกรมธรรม์ฉบับเต็ม",80,1250);
+ ctx.fillStyle="#9b1738";ctx.fillRect(80,1290,1040,2);
+ ctx.fillStyle="#776b74";ctx.font="500 18px 'Noto Sans Thai'";ctx.fillText("AIA HEALTH HAPPY KIDS  ·  PLAN SUMMARY",80,1340);
+ ctx.textAlign="right";ctx.fillText("BENEFIT OVERVIEW",1120,1340);ctx.textAlign="left";
+ return canvas;
+}
+$("confirm").addEventListener("click",async()=>{
+ const p=DATA[ded].plans[plan],on=$("inc").checked;
+ $("summary").innerHTML=`<h2 class="summary-title">สรุปแบบประกันที่คุณเลือก</h2><p class="summary-sub">ภาพสรุปความคุ้มครอง พร้อมบันทึกเพื่อส่งต่อได้ทันที</p><div id="imageHolder"></div><div class="summary-actions"><button class="cta" id="download">↓ บันทึกภาพสรุป PNG</button><button class="cta alt" id="back">แก้ไขแบบที่เลือก</button></div><h2 style="font-size:1rem;margin:27px 0 8px">รายละเอียดความคุ้มครอง</h2><div class="card">${benefits(p,on)}<div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>${dedNote()}${incNote(on)}<p class="footnote">ภาพสรุปนี้จัดทำจากตัวเลือกที่เลือกในหน้าเว็บ ไม่ใช่เอกสารยืนยันการรับประกันหรือกรมธรรม์ โปรดตรวจสอบรายละเอียดกับบริษัท/ตัวแทนก่อนนำเสนอหรือทำสัญญา</p>`;
+ $("pick").classList.add("hide");$("summary").classList.remove("hide");window.scrollTo(0,0);
+ const canvas=await createSummaryImage(),holder=$("imageHolder"),img=document.createElement("img");
+ img.className="summary-preview";img.alt="ภาพสรุปแบบประกัน AIA HEALTH HAPPY KIDS";img.src=canvas.toDataURL("image/png");holder.appendChild(img);
+ $("download").onclick=()=>{const a=document.createElement("a");a.download="AIA-Health-Happy-Kids-Summary.png";a.href=canvas.toDataURL("image/png");a.click()};
+ $("back").onclick=()=>{$("summary").classList.add("hide");$("pick").classList.remove("hide");window.scrollTo(0,0)};
 });
-
-renderPicks(); renderDetail();
+renderPicks();renderDetail();
 </script>
 </body>
 </html>
