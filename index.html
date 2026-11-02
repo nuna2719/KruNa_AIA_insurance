@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AIA HEALTH HAPPY KIDS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f1f4; --card:#fff; --text:#1d1a22; --muted:#6a6573; --line:#ddd8e2;
+  --accent:#c4122f; --accent-ink:#fff; --sel:#fdecef;
+  --warn-bg:#fff4d6; --warn-line:#e0a800; --inc-bg:#e2f4ea; --inc-line:#1a7f4b;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#16131a; --card:#221e28; --text:#f1edf5; --muted:#a39db0; --line:#3a3443;
+    --accent:#ff5a73; --accent-ink:#2a0710; --sel:#3a1f27;
+    --warn-bg:#3b3010; --warn-line:#e0b52e; --inc-bg:#12301f; --inc-line:#5fd08f;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:'Noto Sans Thai',system-ui,-apple-system,'Sarabun',sans-serif;line-height:1.6;
+  padding:env(safe-area-inset-top,0px) 16px calc(24px + env(safe-area-inset-bottom,0px))}
+main{max-width:520px;margin:0 auto;padding-top:22px}
+h1{font-size:1.35rem;margin:0 0 18px;color:var(--accent)}
+h2{font-size:1rem;margin:22px 0 10px}
+.row{display:grid;gap:10px}
+.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:1fr 1fr 1fr}
+.choice{padding:14px 8px;text-align:center;font:inherit;font-weight:700;color:var(--text);
+  background:var(--card);border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
+.choice small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.choice[aria-pressed=true]{background:var(--sel);border-color:var(--accent);color:var(--accent)}
+.toggle{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);
+  border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
+.toggle:has(input:checked){background:var(--inc-bg);border-color:var(--inc-line)}
+.toggle input{width:22px;height:22px;accent-color:var(--inc-line);flex:none}
+.toggle span{flex:1}.toggle small{display:block;color:var(--muted)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 16px;margin-top:16px}
+.li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.93rem}
+.li:last-child{border-bottom:0}
+.li b{text-align:right;white-space:nowrap;flex:none}
+.li span{color:var(--muted)}
+.price{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0}
+.price b{font-size:1.6rem;color:var(--accent)}
+.note{margin-top:14px;padding:12px 14px;background:var(--warn-bg);border-left:5px solid var(--warn-line);border-radius:8px;font-size:.92rem}
+.note.inc{background:var(--inc-bg);border-left-color:var(--inc-line)}
+.note.off{background:var(--card);border-left-color:var(--line);color:var(--muted)}
+.note strong{display:block;font-size:1.05rem;margin-bottom:2px}
+.cta{width:100%;margin-top:18px;padding:15px;font:inherit;font-weight:700;font-size:1rem;
+  background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;cursor:pointer}
+.cta:disabled{opacity:.45;cursor:not-allowed}
+.cta.alt{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.empty{margin-top:16px;padding:16px;text-align:center;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:12px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>แบบประกัน AIA HEALTH HAPPY KIDS</h1>
+
+<section id="pick">
+  <h2>1. เลือกส่วนร่วมจ่ายต่อปี (Deductible)</h2>
+  <div class="row c2" id="dedBtns"></div>
+
+  <h2>2. เลือกแผนการรักษา (วงเงินต่อปี)</h2>
+  <div class="row c3" id="planBtns"></div>
+
+  <h2>3. เลือกความคุ้มครองเพิ่มเติม</h2>
+  <label class="toggle"><input type="checkbox" id="inc">
+    <span>ชดเชยรายได้ 2,000 บาท/วัน<small>โอนเข้าบัญชีหลังออกจากโรงพยาบาล</small></span></label>
+
+  <div id="detail"></div>
+  <button class="cta" id="confirm" disabled>ยืนยันแบบประกันที่เลือก</button>
+</section>
+
+<section id="summary" class="hide"></section>
+</main>
+
+<script>
+/* ===== ข้อมูลแผน แก้ไขได้ที่นี่ ===== */
+const COMMON = {
+  sum: 200000,
+  icu: "เหมาจ่ายตามจริง (ไม่เกิน 365 วัน)",
+  takehome: "20,000 บาท/ครั้ง",
+  surgery: "เหมาจ่าย",
+  followup: "เหมาจ่าย 2 ครั้งต่อการนอน"
+};
+const INCOME_PER_DAY = 2000;
+const DATA = {
+  "10K": { label:"10K DEDUCTIBLE", first:10000, plans:{
+    "1,000,000": { room:"1,500 บาท", doctor:"20,000 บาท/การรักษาครั้งหนึ่ง", visit:"1,000 บาท/วัน", p:27090, pInc:28890 },
+    "5,000,000": { room:"3,000 บาท", doctor:"25,000 บาท/การรักษาครั้งหนึ่ง", visit:"2,000 บาท/วัน", p:36990, pInc:38790 },
+    "15,000,000":{ room:"6,000 บาท", doctor:"30,000 บาท/การรักษาครั้งหนึ่ง", visit:"4,000 บาท/วัน", p:50190, pInc:51990 }
+  }},
+  "30K": { label:"30K DEDUCTIBLE", first:30000, plans:{
+    "1,000,000": { room:"1,500 บาท", doctor:"20,000 บาท/การรักษาครั้งหนึ่ง", visit:"1,000 บาท/วัน", p:13490, pInc:15290 },
+    "5,000,000": { room:"3,000 บาท", doctor:"25,000 บาท/การรักษาครั้งหนึ่ง", visit:"2,000 บาท/วัน", p:19990, pInc:21790 },
+    "15,000,000":{ room:"6,000 บาท", doctor:"30,000 บาท/การรักษาครั้งหนึ่ง", visit:"4,000 บาท/วัน", p:32190, pInc:33990 }
+  }}
+};
+/* =================================== */
+
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("th-TH");
+let ded = "10K", plan = null;
+
+function btn(parent, text, sub, on, handler){
+  const b = document.createElement("button");
+  b.type="button"; b.className="choice"; b.setAttribute("aria-pressed", on);
+  b.innerHTML = text + (sub ? `<small>${sub}</small>` : "");
+  b.onclick = handler; parent.appendChild(b);
+}
+
+function renderPicks(){
+  $("dedBtns").innerHTML = ""; $("planBtns").innerHTML = "";
+  Object.keys(DATA).forEach(k=>{
+    btn($("dedBtns"), DATA[k].label, "รับผิดชอบเอง "+fmt(DATA[k].first)+" บาท/ปี", k===ded,
+        ()=>{ded=k; plan=null; renderPicks(); renderDetail();});
+  });
+  const plans = DATA[ded].plans;
+  if(plans){
+    Object.keys(plans).forEach(k=>{
+      btn($("planBtns"), k, "", k===plan, ()=>{plan=k; renderPicks(); renderDetail();});
+    });
+  }
+}
+
+function incNote(on){
+  return on
+   ? `<div class="note inc"><strong>ชดเชยรายได้ ${fmt(INCOME_PER_DAY)} บาท/วัน</strong>โอนเข้าบัญชีหลังออกจากโรงพยาบาล</div>`
+   : `<div class="note off"><strong>ไม่ได้เลือกชดเชยรายได้</strong>ไม่มีเงินชดเชยรายได้ระหว่างนอนโรงพยาบาล</div>`;
+}
+function dedNote(){
+  return `<div class="note"><strong>รับผิดชอบค่าใช้จ่ายส่วนแรก ${fmt(DATA[ded].first)} บาท/ปีกรมธรรม์</strong>
+    เมื่อครบแล้ว ส่วนต่างที่เหลือบริษัทรับผิดชอบตามเงื่อนไขกรมธรรม์</div>`;
+}
+function benefits(p, withInc){
+  const rows = [
+    ["ทุน", fmt(COMMON.sum)+" บาท"],
+    ["ค่าห้อง ค่าอาหาร ค่าบริการ รพ. (IPD)", p.room],
+    ["ค่าห้อง ICU", COMMON.icu],
+    ["ค่าแพทย์ ค่ายา ค่าสารอาหารทางหลอดเลือดและเวชภัณฑ์", p.doctor],
+    ["ค่ายากลับบ้าน", COMMON.takehome],
+    ["ค่าเยี่ยมแพทย์", p.visit],
+    ["ค่าผ่าตัด ล้างไต ค่ารถพยาบาลฉุกเฉิน", COMMON.surgery],
+    ["ค่าติดตามการรักษา", COMMON.followup]
+  ];
+  if(withInc) rows.push(["ชดเชยรายได้ต่อวัน", fmt(INCOME_PER_DAY)+" บาท (โอนเข้าบัญชีหลังออก รพ.)"]);
+  return rows.map(r=>`<div class="li"><span>${r[0]}</span><b style="white-space:normal">${r[1]}</b></div>`).join("");
+}
+
+function renderDetail(){
+  const d = $("detail"), c = $("confirm");
+  const plans = DATA[ded].plans;
+  if(!plans){
+    d.innerHTML = `<div class="empty">แบบ ${DATA[ded].label} กำลังจัดทำข้อมูล กรุณาเลือกแบบอื่นก่อน</div>`;
+    c.disabled = true; return;
+  }
+  if(!plan){ d.innerHTML = `<div class="empty">เลือกแผนการรักษาเพื่อดูรายละเอียดความคุ้มครอง</div>`; c.disabled = true; return; }
+  const p = plans[plan], on = $("inc").checked;
+  d.innerHTML = `<div class="card">${benefits(p,on)}
+    <div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>
+    ${dedNote()}${incNote(on)}`;
+  c.disabled = false;
+}
+$("inc").addEventListener("change", renderDetail);
+
+$("confirm").addEventListener("click", ()=>{
+  const p = DATA[ded].plans[plan], on = $("inc").checked;
+  $("summary").innerHTML = `
+    <h2 style="margin-top:0">สรุปแบบประกันที่คุณเลือก</h2>
+    <div class="card">
+      <div class="li"><span>แบบประกัน</span><b>${DATA[ded].label}</b></div>
+      <div class="li"><span>แผนการรักษา</span><b>${plan}</b></div>
+    </div>
+    ${dedNote()}${incNote(on)}
+    <h2>รายละเอียดความคุ้มครอง</h2>
+    <div class="card">${benefits(p,on)}
+      <div class="price"><span>เบี้ยประกันต่อปี</span><b>${fmt(on?p.pInc:p.p)} บาท</b></div></div>
+    <button class="cta alt" id="back">แก้ไขแบบที่เลือก</button>`;
+  $("pick").classList.add("hide"); $("summary").classList.remove("hide");
+  window.scrollTo(0,0);
+  $("back").onclick = ()=>{ $("summary").classList.add("hide"); $("pick").classList.remove("hide"); window.scrollTo(0,0); };
+});
+
+renderPicks(); renderDetail();
+</script>
+</body>
+</html>
